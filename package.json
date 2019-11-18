@@ -41,6 +41,7 @@
     "jest-fetch-mock": "^2.1.2",
     "nock": "^11.7.0",
     "node-fetch": "^2.6.0",
+    "rollup-plugin-typescript2": "^0.25.2",
     "ts-jest": "^24.1.0"
   }
 }
