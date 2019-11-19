@@ -16,11 +16,11 @@ type ReducersDictionary = { [key: string]: Function };
 
 type CombinedAction = (actionName: string, body: any, values?: any, headers?: any) => any;
 
-interface CollectionOptions {
+export interface CollectionOptions {
   [key: string]: any;
 }
 
-interface APIResourceCollection {
+export interface APIResourceCollection {
   addResource: (resource: Resource) => void;
   getReducers: () => ReducersDictionary;
   action: CombinedAction;

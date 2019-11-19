@@ -175,11 +175,7 @@ export const addItemToObject: ObjectOperation = (item, dataObject) => {
   };
 };
 
-export const addCreatedItem: ObjectOperation = addItemToObject;
-
-export const setUpdatedItem: ObjectOperation = addItemToObject;
-
-export const removeDeletedItem: ObjectOperation = (item, dataObject) => {
+export const removeItemFromObject: ObjectOperation = (item, dataObject) => {
   const key = String(item.id);
   const obj = {
     ...dataObject
@@ -187,3 +183,9 @@ export const removeDeletedItem: ObjectOperation = (item, dataObject) => {
   delete obj[key];
   return obj;
 };
+
+export const addCreatedItem: ObjectOperation = addItemToObject;
+
+export const setUpdatedItem: ObjectOperation = addItemToObject;
+
+export const removeDeletedItem: ObjectOperation = removeItemFromObject;

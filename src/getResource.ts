@@ -25,31 +25,29 @@ export interface Resource {
   headers: any;
 }
 
-export const getResource: (
-  actionName: string,
-  endpoint?: string | undefined,
-  options?: ResourceOptions
-) => Resource = memoize((actionName, endpoint = undefined, options = {}) => {
-  const formattedActionName = getFormattedActionName(actionName);
-  const method: HttpMethod = getMethod(options.method, actionName);
-  const dataName: string = options.dataName || getDataName(actionName);
-  const type: ResourceType = getType(options.type, actionName);
-  const defaultData: [] | {} = options.defaultData || getDefaultData(type);
-  const transforms: DataTransform[] = options.transforms || getTransforms(type);
-  const isAPIResource: boolean = endpoint !== undefined;
-  const headers: object = options.headers || {};
-  return {
-    actionName: formattedActionName,
-    endpoint,
-    method,
-    transforms,
-    defaultData,
-    dataName,
-    type,
-    isAPIResource,
-    headers
-  };
-});
+const getResource: (actionName: string, endpoint?: string | undefined, options?: ResourceOptions) => Resource = memoize(
+  (actionName, endpoint = undefined, options = {}) => {
+    const formattedActionName = getFormattedActionName(actionName);
+    const method: HttpMethod = getMethod(options.method, actionName);
+    const dataName: string = options.dataName || getDataName(actionName);
+    const type: ResourceType = getType(options.type, actionName);
+    const defaultData: [] | {} = options.defaultData || getDefaultData(type);
+    const transforms: DataTransform[] = options.transforms || getTransforms(type);
+    const isAPIResource: boolean = endpoint !== undefined;
+    const headers: object = options.headers || {};
+    return {
+      actionName: formattedActionName,
+      endpoint,
+      method,
+      transforms,
+      defaultData,
+      dataName,
+      type,
+      isAPIResource,
+      headers
+    };
+  }
+);
 
 export const getTransforms: (resourceType: ResourceType) => [DataTransform, DataTransform] = memoize(resourceType => {
   return resourceType === ResourceType.MULTIPLE_ITEMS ? [objKeyValues, arrObjectValues] : [noTransform, noTransform];

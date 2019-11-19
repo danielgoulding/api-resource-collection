@@ -1,13 +1,12 @@
 {
-  "name": "notes",
+  "name": "api-resource-collection",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
-    "moize": "^5.4.4",
-    "typescript": "^3.7.2"
+    "moize": "^5.4.4"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "rollup -c",
+    "watch": "rollup -cw",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors"
@@ -41,7 +40,38 @@
     "jest-fetch-mock": "^2.1.2",
     "nock": "^11.7.0",
     "node-fetch": "^2.6.0",
+    "rollup": "^1.27.2",
     "rollup-plugin-typescript2": "^0.25.2",
-    "ts-jest": "^24.1.0"
-  }
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  },
+  "description": "Simplify REST based async actions and reducers, typically in a React/Redux prroject",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielgoulding/api-resource-collection.git"
+  },
+  "keywords": [
+    "api",
+    "resouce",
+    "collection",
+    "react",
+    "redux",
+    "async",
+    "action",
+    "reducer",
+    "HTTP",
+    "REST"
+  ],
+  "author": "Daniel Goulding",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielgoulding/api-resource-collection/issues"
+  },
+  "homepage": "https://github.com/danielgoulding/api-resource-collection#readme"
 }
