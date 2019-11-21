@@ -111,7 +111,9 @@ notesCollection.addResource(getResource(ActionName.DELETE_ITEM, baseURL + '/note
 Get the reducers from the collection and add to the store:
 
 ```
-const reducers = notesCollection.getReducers()
+import { usersCollection } from './apiCollections';
+
+const reducers = usersCollection.getReducers()
 const appReducer = combineReducers(reducers);
 ```
 
