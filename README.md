@@ -106,7 +106,16 @@ notesCollection.addResource(getResource(ActionName.MODIFY_ITEM, baseURL + '/note
 notesCollection.addResource(getResource(ActionName.DELETE_ITEM, baseURL + '/notes/:noteId'));
 ```
 
-### 2. Making API Requests
+### 2. Add Reducers to Store
+
+Get the reducers from the collection and add to the store:
+
+```
+const reducers = notesCollection.getReducers()
+const appReducer = combineReducers(reducers);
+```
+
+### 3. Making API Requests
 
 First import the collection you created earlier:
 
@@ -181,7 +190,7 @@ if (response.ok) {
 }
 ```
 
-### 3. Using State From Redux:
+### 4. Using State From Redux:
 
 First import the collection you created earlier:
 
