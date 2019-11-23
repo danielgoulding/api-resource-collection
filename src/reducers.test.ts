@@ -122,12 +122,13 @@ describe('getAPIRequestStatesReducer', () => {
   test('request state is set correctly', () => {
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.REQUEST);
     const action = getAction(request);
+    const error: string | undefined = undefined;
     const expected = {
       data: {},
       isLoading: true,
       isLoaded: false,
       isError: false,
-      error: undefined
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
@@ -137,12 +138,13 @@ describe('getAPIRequestStatesReducer', () => {
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.SUCCESS);
     const data = { id: 34, name: 'created item' };
     const action = getAction(request, data);
+    const error: string | undefined = undefined;
     const expected = {
       data,
       isLoading: false,
       isLoaded: true,
       isError: false,
-      error: undefined
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
@@ -157,7 +159,7 @@ describe('getAPIRequestStatesReducer', () => {
       isLoading: false,
       isLoaded: false,
       isError: true,
-      error: error
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
@@ -248,12 +250,13 @@ describe('getCombinedReducer', () => {
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.SUCCESS);
     const data = { id: 34, name: 'created item' };
     const action = getAction(request, [data]);
+    const error: string | undefined = undefined;
     const expected = {
       data: { '34': data },
       isLoading: false,
       isLoaded: true,
       isError: false,
-      error: undefined
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
@@ -285,12 +288,13 @@ describe('getAPIReducer/combined reducer', () => {
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.SUCCESS);
     const data = { id: 34, name: 'created item' };
     const action = getAction(request, [data]);
+    const error: string | undefined = undefined;
     const expected = {
       data: { '34': data },
       isLoading: false,
       isLoaded: true,
       isError: false,
-      error: undefined
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
@@ -322,12 +326,13 @@ describe('getAPIReducer/request states only reducer', () => {
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.SUCCESS);
     const data = { id: 34, name: 'modified item' };
     const action = getAction(request, data);
+    const error: string | undefined = undefined;
     const expected = {
       data,
       isLoading: false,
       isLoaded: true,
       isError: false,
-      error: undefined
+      error
     };
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);

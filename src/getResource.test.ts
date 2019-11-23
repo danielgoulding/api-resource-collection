@@ -7,12 +7,7 @@ import getResource, {
   getDataName,
   getType
 } from './getResource';
-import {
-  objKeyValues,
-  arrObjectValues,
-  noTransform,
-  DataTransform
-} from './dataTransforms';
+import { objKeyValues, arrObjectValues, noTransform, DataTransform } from './dataTransforms';
 import { ResourceType, ActionName } from './constants.const';
 import { HttpMethod } from './utils';
 
@@ -62,17 +57,13 @@ describe('getDefaultMethod', () => {
 
 describe('getMethod', () => {
   test('if method matches, return method', () => {
-    expect(getMethod(HttpMethod.GET, ActionName.GET_ITEM)).toEqual(
-      HttpMethod.GET
-    );
+    expect(getMethod(HttpMethod.GET, ActionName.GET_ITEM)).toEqual(HttpMethod.GET);
   });
   test("if method doesn't match, return GET for get item", () => {
     expect(getMethod(undefined, ActionName.GET_ITEM)).toEqual(HttpMethod.GET);
   });
   test("if method doesn't match, return POST for create item", () => {
-    expect(getMethod(undefined, ActionName.CREATE_ITEM)).toEqual(
-      HttpMethod.POST
-    );
+    expect(getMethod(undefined, ActionName.CREATE_ITEM)).toEqual(HttpMethod.POST);
   });
 });
 
@@ -105,20 +96,12 @@ describe('getDataName', () => {
 
 describe('getType', () => {
   test('if defined type matches, return defined type', () => {
-    expect(getType(ResourceType.MULTIPLE_ITEMS, ActionName.GET_ITEMS)).toEqual(
-      ResourceType.MULTIPLE_ITEMS
-    );
-    expect(getType(ResourceType.SINGLE_ITEM, ActionName.GET_ITEM)).toEqual(
-      ResourceType.SINGLE_ITEM
-    );
+    expect(getType(ResourceType.MULTIPLE_ITEMS, ActionName.GET_ITEMS)).toEqual(ResourceType.MULTIPLE_ITEMS);
+    expect(getType(ResourceType.SINGLE_ITEM, ActionName.GET_ITEM)).toEqual(ResourceType.SINGLE_ITEM);
   });
   test("if defined type doesn't match, return default type", () => {
-    expect(getType('invalidEntry', ActionName.GET_ITEMS)).toEqual(
-      ResourceType.MULTIPLE_ITEMS
-    );
-    expect(getType('invalidEntry', 'registerlearner')).toEqual(
-      ResourceType.SINGLE_ITEM
-    );
+    expect(getType('invalidEntry', ActionName.GET_ITEMS)).toEqual(ResourceType.MULTIPLE_ITEMS);
+    expect(getType('invalidEntry', 'registerlearner')).toEqual(ResourceType.SINGLE_ITEM);
   });
 });
 
@@ -156,11 +139,12 @@ describe('getResource', () => {
 
   test('not api resource', () => {
     const actionName = 'doSomething';
+    const endpoint: string | undefined = undefined;
     const expected = {
       actionName: 'DO_SOMETHING',
       dataName: 'doSomething',
       defaultData: {},
-      endpoint: undefined,
+      endpoint,
       headers: {},
       isAPIResource: false,
       method: 'GET',

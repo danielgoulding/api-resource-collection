@@ -7,13 +7,14 @@ import getResource from './getResource';
 describe('getCollection', () => {
   const resourceName = 'users';
   const resource = getResource(ActionName.GET_ITEM, '/some/url');
+  const error: string | undefined = undefined;
   const state = {
     'USERS.GET_RESOURCE_ITEM': {
       data: {},
       isLoading: false,
       isLoaded: false,
       isError: false,
-      error: undefined
+      error
     }
   };
   const resources = {
@@ -221,13 +222,14 @@ describe('apiResourceCollection', () => {
     const collection = apiResourceCollection('comments');
     const resource = getResource(ActionName.GET_ITEM, '/some/url');
     collection.addResource(resource);
+    const error: string | undefined = undefined;
     const state = {
       'COMMENTS.GET_RESOURCE_ITEM': {
         data: {},
         isLoading: false,
         isLoaded: false,
         isError: false,
-        error: undefined
+        error
       },
       'COMMENTS.SET_SELECTED_ITEM': {
         data: {},
@@ -239,7 +241,7 @@ describe('apiResourceCollection', () => {
     // expected:
     const item = {
       data: {},
-      error: undefined,
+      error,
       isError: false,
       isLoaded: false,
       isLoading: false,
