@@ -127,8 +127,15 @@ describe('getResponseData', () => {
     expect(returnedData).toEqual(data);
   });
 
-  it('response data not correct structure - return defaut data', async () => {
+  it('no data prop in json - return json instead', async () => {
     const data = { id: 4 };
+    const response = new Response(JSON.stringify(data), { status: 200 });
+    const returnedData = await getResponseData(response, {});
+    expect(returnedData).toEqual(data);
+  });
+
+  it('no valid data prop - return default data', async () => {
+    const data: any = null;
     const response = new Response(JSON.stringify(data), { status: 200 });
     const returnedData = await getResponseData(response, {});
     expect(returnedData).toEqual({});

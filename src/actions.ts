@@ -134,7 +134,7 @@ export const getResponseData: (response: Response, defaultData: any) => Promise<
   let data = defaultData;
   try {
     const json = await response.json();
-    data = json.data || defaultData;
+    data = json.data || json || defaultData;
   } catch (error) {}
   return data;
 };
