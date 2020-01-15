@@ -1,7 +1,8 @@
 import memoize from 'moize';
 
 import { ActionName, LoadingState } from './constants.const';
-import { getAPIAction, getAction, DataAction } from './actions';
+import { getAPIAction } from './actions';
+import { getAction, DataAction } from './getAction';
 import { getAPIReducer, getSimpleReducer, getReducerKey, getReducerState } from './reducers';
 import getResource, { Resource } from './getResource';
 import { getFormattedActionName } from './utils';

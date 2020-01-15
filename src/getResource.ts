@@ -3,6 +3,7 @@ import memoize from 'moize';
 import { ActionName, ResourceType } from './constants.const';
 import { objKeyValues, arrObjectValues, noTransform, DataTransform } from './dataTransforms';
 import { getFormattedActionName, HttpMethod, getMethod as getHttpMethod } from './utils';
+import { ResponseTransformer, transformResponseData } from './responseTransformers';
 
 export interface ResourceOptions {
   method?: HttpMethod;
@@ -11,6 +12,7 @@ export interface ResourceOptions {
   defaultData?: [] | {};
   transforms?: DataTransform[];
   headers?: any;
+  responseTransformer?: ResponseTransformer;
 }
 
 export interface Resource {
@@ -23,6 +25,7 @@ export interface Resource {
   type: ResourceType;
   isAPIResource: boolean;
   headers: any;
+  responseTransformer: ResponseTransformer;
 }
 
 const getResource: (actionName: string, endpoint?: string | undefined, options?: ResourceOptions) => Resource = memoize(
@@ -35,6 +38,7 @@ const getResource: (actionName: string, endpoint?: string | undefined, options?:
     const transforms: DataTransform[] = options.transforms || getTransforms(type);
     const isAPIResource: boolean = endpoint !== undefined;
     const headers: object = options.headers || {};
+    const responseTransformer: ResponseTransformer = options.responseTransformer || transformResponseData;
     return {
       actionName: formattedActionName,
       endpoint,
@@ -44,7 +48,8 @@ const getResource: (actionName: string, endpoint?: string | undefined, options?:
       dataName,
       type,
       isAPIResource,
-      headers
+      headers,
+      responseTransformer
     };
   }
 );

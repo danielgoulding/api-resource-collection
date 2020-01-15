@@ -3,15 +3,9 @@ import memoize from 'moize';
 import { getReducerState } from './reducers';
 import { getAPIRequestOptions, RequestOptions } from './utils';
 import { Resource } from './getResource';
-
-export enum RequestStatus {
-  REQUEST = 'REQUEST',
-  FAILURE = 'FAILURE',
-  SUCCESS = 'SUCCESS',
-  CREATED = 'CREATED',
-  UPDATED = 'UPDATED',
-  DELETED = 'DELETED'
-}
+import { RequestStatus } from './constants.const';
+import { getAction } from './getAction';
+import { ResponseTransformer, transformResponseData } from './responseTransformers';
 
 export const getAPIAction: (
   resourceName: string,
@@ -33,7 +27,12 @@ export const getAPIAction: (
       const apiOptions: RequestOptions = getAPIRequestOptions(resource.method, body, headers, options.token);
 
       // get response from API:
-      const response: APIResponse = await getResponse(endpointURL, apiOptions, resource.defaultData);
+      const response: APIResponse = await getResponse(
+        endpointURL,
+        apiOptions,
+        resource.defaultData,
+        resource.responseTransformer
+      );
 
       // set dispatch data:
       const type: RequestStatus = response.ok ? RequestStatus.SUCCESS : RequestStatus.FAILURE;
@@ -47,18 +46,6 @@ export const getAPIAction: (
     };
   }
 );
-
-export interface DataAction {
-  type: string;
-  data?: any;
-}
-
-export const getAction: (type: string, data?: any) => DataAction = memoize((type, data = null) => {
-  return {
-    type,
-    ...(data !== null && { data: data })
-  };
-});
 
 // find any :prop in endpoint and replace with and prop of same name in options or values:
 export const getEndpoint: (endpoint: string, options?: any, values?: any) => string = memoize(
@@ -96,13 +83,19 @@ export interface APIResponse {
   response: any;
 }
 
-export const getResponse: (endpointURL: string, apiOptions: any, defaultData: any) => Promise<APIResponse> = async (
+export const getResponse: (
   endpointURL: string,
   apiOptions: any,
-  defaultData: any
+  defaultData: any,
+  transformer: ResponseTransformer
+) => Promise<APIResponse> = async (
+  endpointURL: string,
+  apiOptions: any,
+  defaultData: any,
+  transformer: ResponseTransformer
 ) => {
   const apiResponse: Response = await getAPIResponse(endpointURL, apiOptions);
-  let data: any = await getResponseData(apiResponse, defaultData);
+  let data: any = await getResponseData(apiResponse, defaultData, transformer);
   return {
     ok: apiResponse.ok,
     status: Number(apiResponse.status),
@@ -124,17 +117,13 @@ export const getAPIResponse: (endpointURL: string, apiOptions: any) => Promise<R
   }
 };
 
-export const getResponseData: (response: Response, defaultData: any) => Promise<any> = async (
+export const getResponseData: (
   response: Response,
-  defaultData: any
-) => {
+  defaultData: any,
+  transformer: ResponseTransformer
+) => Promise<any> = async (response, defaultData, transformer) => {
   if (!response.ok) {
     return defaultData;
   }
-  let data = defaultData;
-  try {
-    const json = await response.json();
-    data = json.data || defaultData;
-  } catch (error) {}
-  return data;
+  return (await transformer(response)) || defaultData;
 };

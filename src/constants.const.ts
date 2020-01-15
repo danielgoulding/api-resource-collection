@@ -22,3 +22,12 @@ export enum LoadingState {
   LOADED = 'loaded',
   ERROR = 'error'
 }
+
+export enum RequestStatus {
+  REQUEST = 'REQUEST',
+  FAILURE = 'FAILURE',
+  SUCCESS = 'SUCCESS',
+  CREATED = 'CREATED',
+  UPDATED = 'UPDATED',
+  DELETED = 'DELETED'
+}

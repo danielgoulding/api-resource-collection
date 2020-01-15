@@ -8,6 +8,19 @@ export enum HttpMethod {
   DELETE = 'DELETE'
 }
 
+export const splitHeader: (header: string, delimiter?: string) => string[] = (header, delimiter = ';') => {
+  return header.split(delimiter).map(pair => pair.trim());
+};
+
+export const getPairsObject: (pairs: string[], delimiter?: string) => any = (pairs, delimiter = '=') => {
+  const data: any = {};
+  pairs.forEach(pair => {
+    const [key, value] = pair.split(delimiter);
+    data[key] = value;
+  });
+  return data;
+};
+
 export interface RequestOptions {
   method: HttpMethod;
   headers: any;

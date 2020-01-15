@@ -1,7 +1,7 @@
 import memoize from 'moize';
 
-import { ActionName, ResourceType } from './constants.const';
-import { DataAction, RequestStatus } from './actions';
+import { ActionName, ResourceType, RequestStatus } from './constants.const';
+import { DataAction } from './getAction';
 import { ObjectWithID, DataTransform } from './dataTransforms';
 import { Resource } from './getResource';
 import { getFormattedActionName } from './utils';

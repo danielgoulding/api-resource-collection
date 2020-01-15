@@ -14,8 +14,8 @@ import {
   getAPIReducer
 } from './reducers';
 import getResource from './getResource';
-import { ActionName } from './constants.const';
-import { getAction, RequestStatus } from './actions';
+import { ActionName, RequestStatus } from './constants.const';
+import { getAction } from './getAction';
 import { getFormattedActionName } from './utils';
 
 describe('getReducerKey', () => {

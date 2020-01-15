@@ -4,9 +4,10 @@ export {
   APIResourceCollection,
   Collection
 } from './apiResourceCollection';
-export { ActionName, ResourceType, LoadingState } from './constants.const';
+export { ActionName, ResourceType, LoadingState, RequestStatus } from './constants.const';
 import { objKeyValues, arrObjectValues, noTransform, DataTransform } from './dataTransforms';
-export { RequestStatus, DataAction, getAction, APIResponse, getResponse } from './actions';
+export { APIResponse, getResponse } from './actions';
+export { DataAction, getAction } from './getAction';
 export { DataTransform, ObjectWithID, objKeyValues, arrObjectValues, noTransform } from './dataTransforms';
 export { default as getResource, ResourceOptions, Resource } from './getResource';
 export {
@@ -19,12 +20,15 @@ export {
   addItemToObject,
   removeItemFromObject
 } from './reducers';
-import {
+export {
   HttpMethod,
   RequestOptions,
   jsonHeaders,
   getAuthHeader,
   getHeaders,
   getMethod,
-  getAPIRequestOptions
+  getAPIRequestOptions,
+  splitHeader,
+  getPairsObject
 } from './utils';
+export { ResponseTransformer, transformResponseData } from './responseTransformers';

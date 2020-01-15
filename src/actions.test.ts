@@ -1,16 +1,8 @@
-import {
-  getAction,
-  getEndpoint,
-  dispatchStatus,
-  getResponse,
-  getAPIResponse,
-  getResponseData,
-  RequestStatus,
-  getAPIAction
-} from './actions';
+import { getEndpoint, dispatchStatus, getResponse, getAPIResponse, getResponseData, getAPIAction } from './actions';
 import { getReducerState } from './reducers';
 import getResource from './getResource';
-import { ActionName } from './constants.const';
+import { ActionName, RequestStatus } from './constants.const';
+import { getAction } from './getAction';
 
 describe('getAction', () => {
   const actionName = 'ACTION_NAME';
