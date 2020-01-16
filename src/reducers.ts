@@ -45,6 +45,8 @@ export const getAPIRequestStatesReducer: (resourceName: string, resource: Resour
     const request: string = getReducerState(resource.actionName, resourceName, RequestStatus.REQUEST);
     const failure: string = getReducerState(resource.actionName, resourceName, RequestStatus.FAILURE);
     const success: string = getReducerState(resource.actionName, resourceName, RequestStatus.SUCCESS);
+    const setItemData: string = getReducerState(ActionName.SET_ITEM_DATA, resourceName);
+    const clear: string = getReducerState(ActionName.CLEAR, resourceName);
     switch (action.type) {
       case request:
         return {
@@ -63,6 +65,15 @@ export const getAPIRequestStatesReducer: (resourceName: string, resource: Resour
           isError: false,
           error: undefined
         };
+      case setItemData:
+        return {
+          ...state,
+          isLoading: false,
+          isLoaded: true,
+          data: action.data,
+          isError: false,
+          error: undefined
+        };
       case failure:
         return {
           ...state,
@@ -71,6 +82,8 @@ export const getAPIRequestStatesReducer: (resourceName: string, resource: Resour
           isError: true,
           error: action.data
         };
+      case clear:
+        return defaultState;
       default:
         return state;
     }

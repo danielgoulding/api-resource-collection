@@ -10,6 +10,7 @@ import getResource, {
 import { objKeyValues, arrObjectValues, noTransform, DataTransform } from './dataTransforms';
 import { ResourceType, ActionName } from './constants.const';
 import { HttpMethod } from './utils';
+import { ResponseTransformer, transformResponseData } from './responseTransformers';
 
 describe('getTransforms', () => {
   test('for multiple items, return transforms', () => {
@@ -119,6 +120,7 @@ describe('getResource', () => {
       type: ResourceType.SINGLE_ITEM,
       defaultData: {},
       transforms: [dt, dt],
+      responseTransformer: transformResponseData,
       headers: { headerName: 'headerValue' }
     };
     const expected = {
@@ -132,6 +134,7 @@ describe('getResource', () => {
       isAPIResource: true,
       method: 'POST',
       transforms: [dt, dt],
+      responseTransformer: transformResponseData,
       type: 'SINGLE_ITEM'
     };
     expect(getResource(actionName, endpoint, options)).toEqual(expected);
@@ -149,6 +152,7 @@ describe('getResource', () => {
       isAPIResource: false,
       method: 'GET',
       transforms: [noTransform, noTransform],
+      responseTransformer: transformResponseData,
       type: 'SINGLE_ITEM'
     };
     expect(getResource(actionName, undefined)).toEqual(expected);

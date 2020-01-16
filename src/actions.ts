@@ -121,7 +121,7 @@ export const getResponseData: (
   response: Response,
   defaultData: any,
   transformer: ResponseTransformer
-) => Promise<any> = async (response, defaultData, transformer) => {
+) => Promise<any> = async (response, defaultData, transformer = transformResponseData) => {
   if (!response.ok) {
     return defaultData;
   }

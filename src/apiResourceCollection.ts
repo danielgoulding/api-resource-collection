@@ -33,6 +33,8 @@ export interface APIResourceCollection {
   getItems: APIAction;
   getItem: APIAction;
   useCollection: (state: any) => any;
+  setItemData: SimpleAction;
+  clear: SimpleAction;
   addCreatedItem: SimpleAction;
   setUpdatedItem: SimpleAction;
   removeDeletedItem: SimpleAction;
@@ -89,6 +91,14 @@ const apiResourceCollection: (name: string, options?: CollectionOptions) => APIR
 
   // COMMON ACTIONS WRAPPERS:
 
+  const setItemData: SimpleAction = data => {
+    return simpleAction(ActionName.SET_ITEM_DATA, data);
+  };
+
+  const clear: SimpleAction = (data = null) => {
+    return simpleAction(ActionName.CLEAR, null);
+  };
+
   const setSelectedItem: SimpleAction = data => {
     return simpleAction(ActionName.SET_SELECTED_ITEM, data);
   };
@@ -141,6 +151,8 @@ const apiResourceCollection: (name: string, options?: CollectionOptions) => APIR
     updateItem: updateItem,
     modifyItem: modifyItem,
     createItem: createItem,
+    setItemData: setItemData,
+    clear: clear,
     getItems: getItems,
     getItem: getItem,
     useCollection: useCollection,
