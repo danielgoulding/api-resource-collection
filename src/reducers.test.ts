@@ -164,6 +164,30 @@ describe('getAPIRequestStatesReducer', () => {
     const newState = reducer(defaultAPIReducerState, action);
     expect(newState).toEqual(expected);
   });
+
+  test('set item data', () => {
+    const request: string = getReducerState(ActionName.SET_ITEM_DATA, resourceName);
+    const data = { item: 'data item' };
+    const action = getAction(request, data);
+    const error: string | undefined = undefined;
+    const expected = {
+      data,
+      isLoading: false,
+      isLoaded: true,
+      isError: false,
+      error
+    };
+    const newState = reducer(defaultAPIReducerState, action);
+    expect(newState).toEqual(expected);
+  });
+
+  test('clear sets correctly', () => {
+    const request: string = getReducerState(ActionName.CLEAR, resourceName);
+    const action = getAction(request);
+    const error: string | undefined = undefined;
+    const newState = reducer(defaultAPIReducerState, action);
+    expect(newState).toEqual(defaultAPIReducerState);
+  });
 });
 
 describe('getItemListReducer', () => {

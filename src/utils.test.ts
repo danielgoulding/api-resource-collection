@@ -7,8 +7,46 @@ import {
   getHeaders,
   jsonHeaders,
   getMethod,
-  getAPIRequestOptions
+  getAPIRequestOptions,
+  splitHeader,
+  getPairsObject
 } from './utils';
+
+describe('getPairsObject', () => {
+  const pairs = ['name1=value1', 'name2=value2'];
+  const expected = {
+    name1: 'value1',
+    name2: 'value2'
+  };
+  test('2 pairs', () => {
+    expect(getPairsObject(pairs)).toEqual(expected);
+  });
+  test('no delimiter present', () => {
+    expect(getPairsObject(pairs, ',')).toEqual({});
+  });
+  const pairs2 = ['name1/value1', 'name2/value2'];
+  test('different delimiter set', () => {
+    expect(getPairsObject(pairs2, '/')).toEqual(expected);
+  });
+});
+
+describe('splitHeader', () => {
+  test('delimiters present', () => {
+    const header = 'name1=value1; name2=value2';
+    const expected = ['name1=value1', 'name2=value2'];
+    expect(splitHeader(header)).toEqual(expected);
+  });
+  test('no delimiters present', () => {
+    const header = 'name1=value1, name2=value2';
+    const expected = ['name1=value1, name2=value2'];
+    expect(splitHeader(header)).toEqual(expected);
+  });
+  test('different delimiter used', () => {
+    const header = 'name1=value1 | name2=value2';
+    const expected = ['name1=value1', 'name2=value2'];
+    expect(splitHeader(header, '|')).toEqual(expected);
+  });
+});
 
 describe('snakeCase', () => {
   test('camelCase', () => {

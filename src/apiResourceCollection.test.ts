@@ -70,7 +70,10 @@ describe('getCollectionState', () => {
     expect(collectionState.error).toBe(undefined);
   });
   test('data is transformed', () => {
-    expect(collectionState.data).toEqual([{ id: 1, name: 'item 1' }, { id: 2, name: 'item 2' }]);
+    expect(collectionState.data).toEqual([
+      { id: 1, name: 'item 1' },
+      { id: 2, name: 'item 2' }
+    ]);
   });
   test('loading state is set', () => {
     expect(collectionState.loadingState).toBe(LoadingState.LOADED);
@@ -215,6 +218,19 @@ describe('apiResourceCollection', () => {
     const data = { id: 87 };
     const action = collection.removeDeletedItem(data);
     const expected = { type: 'USERS_REMOVE_DELETED_ITEM', data: data };
+    expect(action).toEqual(expected);
+  });
+
+  test('setItemData() will return correct action', () => {
+    const data = { id: 87 };
+    const action = collection.setItemData(data);
+    const expected = { type: 'USERS_SET_ITEM_DATA', data: data };
+    expect(action).toEqual(expected);
+  });
+
+  test('clear() will return correct action', () => {
+    const action = collection.clear(null);
+    const expected = { type: 'USERS_CLEAR' };
     expect(action).toEqual(expected);
   });
 

@@ -9,7 +9,7 @@ import { getFormattedActionName } from './utils';
 
 type APIAction = (data: any, values?: any, headers?: any) => Function;
 
-type SimpleAction = (data: any) => DataAction;
+type SimpleAction = (data?: any) => DataAction;
 
 type ResourcesDictionary = { [key: string]: Resource };
 
@@ -95,7 +95,7 @@ const apiResourceCollection: (name: string, options?: CollectionOptions) => APIR
     return simpleAction(ActionName.SET_ITEM_DATA, data);
   };
 
-  const clear: SimpleAction = (data = null) => {
+  const clear: SimpleAction = () => {
     return simpleAction(ActionName.CLEAR, null);
   };
 
