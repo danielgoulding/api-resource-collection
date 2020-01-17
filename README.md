@@ -48,7 +48,7 @@ After setting up the collection, add the 'resources'. these consist of the sort 
 
 #### Action Names
 
-There are a few types of operation set up and represented within the `ActionName` enum. They are associated by default with the appropriate HTTP verb as follows:
+There are a few types of API operation set up and represented within the `ActionName` enum. They are associated by default with the appropriate HTTP verb as follows:
 
 1. Get a list: `ActionName.GET_ITEMS` (GET request)
 2. Get an item: `ActionName.GET_ITEM` (GET request)
@@ -56,6 +56,15 @@ There are a few types of operation set up and represented within the `ActionName
 4. Update an item: `ActionName.UPDATE_ITEM` (PUT request)
 5. Modify an item: `ActionName.MODIFY_ITEM` (PATCH request)
 6. Delete an item: `ActionName.DELETE_ITEM` (DELETE request)
+
+Other possible actions:
+
+7. Set Selected Item: `ActionName.SET_SELECTED_ITEM`
+8. Add Created Item to collection list: `ActionName.ADD_CREATED_ITEM`
+9. Updated Item in collection list: `ActionName.SET_UPDATED_ITEM`
+10. Remove item from collection list: `ActionName.REMOVE_DELETED_ITEM`
+11. Manually Set Item Data: `ActionName.SET_ITEM_DATA`
+12. Clear all Data (revert to initial state): `ActionName.CLEAR`
 
 #### Bespoke Actions
 
