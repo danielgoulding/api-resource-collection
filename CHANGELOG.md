@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2020-01-17
+
+### Changed
+
+- Behaviour of default reponse transformer changed. If data property is not present, send back json object or if json not valid property, send back null: `return json.data || json || null;`
+
 ## [0.2.0] - 2020-01-17
 
 ### Added

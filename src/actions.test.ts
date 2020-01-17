@@ -3,6 +3,7 @@ import { getReducerState } from './reducers';
 import getResource from './getResource';
 import { ActionName, RequestStatus } from './constants.const';
 import { getAction } from './getAction';
+import { transformResponseData } from './responseTransformers';
 
 describe('getAction', () => {
   const actionName = 'ACTION_NAME';
@@ -98,7 +99,7 @@ describe('getResponseData', () => {
   it('response error returns default data: {}', async () => {
     const data = JSON.stringify({ data: { id: 4 } });
     const response = new Response(data, { status: 400 });
-    const returnedData = await getResponseData(response, {});
+    const returnedData = await getResponseData(response, {}, transformResponseData);
     expect(returnedData).toEqual({});
   });
 
@@ -108,22 +109,22 @@ describe('getResponseData', () => {
     response.json = (): any => {
       throw new Error('Problem parsing json');
     };
-    const returnedData = await getResponseData(response, []);
+    const returnedData = await getResponseData(response, [], transformResponseData);
     expect(returnedData).toEqual([]);
   });
 
   it('returns data from body', async () => {
     const data = { id: 4 };
     const response = new Response(JSON.stringify({ data }), { status: 200 });
-    const returnedData = await getResponseData(response, []);
+    const returnedData = await getResponseData(response, [], transformResponseData);
     expect(returnedData).toEqual(data);
   });
 
-  it('response data not correct structure - return defaut data', async () => {
+  it('response data does not contain data property - return json object instead', async () => {
     const data = { id: 4 };
     const response = new Response(JSON.stringify(data), { status: 200 });
-    const returnedData = await getResponseData(response, {});
-    expect(returnedData).toEqual({});
+    const returnedData = await getResponseData(response, {}, transformResponseData);
+    expect(returnedData).toEqual(data);
   });
 });
 
@@ -138,7 +139,7 @@ describe('getResponse', () => {
     const data = { id: '12345' };
     const wrappedData = JSON.stringify({ data });
     fetchMock.once(wrappedData);
-    const response = await getResponse(url, {}, {});
+    const response = await getResponse(url, {}, {}, transformResponseData);
 
     expect(response.ok).toEqual(true);
     expect(response.status).toEqual(200);
@@ -153,7 +154,7 @@ describe('getResponse', () => {
     const wrappedData = JSON.stringify({ data });
     fetchMock.mockRejectOnce(new Error(errorMessage));
 
-    const response = await getResponse(url, {}, {});
+    const response = await getResponse(url, {}, {}, transformResponseData);
 
     expect(response.ok).toEqual(false);
     expect(response.status).toEqual(444);
